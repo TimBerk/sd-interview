@@ -1,6 +1,6 @@
 import type { RoomWithDetails, UserRole, RoomSession } from "../types";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 export const api = {
   async validateToken(token: string): Promise<RoomSession | null> {

@@ -1,4 +1,4 @@
-import { FileText } from 'lucide-react';
+import { FileText, Layers } from 'lucide-react';
 import type { Section, Task } from '../types';
 
 interface ConditionsPanelProps {
@@ -7,11 +7,11 @@ interface ConditionsPanelProps {
 }
 
 const SECTION_TYPE_COLORS: Record<string, string> = {
-  REQUIREMENTS: 'bg-purple-500',
+  REQUIREMENTS: 'bg-cyan-500',
   CALCULATION: 'bg-orange-500',
   DATA_MODEL: 'bg-green-500',
   API: 'bg-blue-500',
-  HLD: 'bg-indigo-500',
+  HLD: 'bg-teal-500',
   LLD: 'bg-pink-500',
   RISKS: 'bg-red-500',
 };
@@ -19,6 +19,27 @@ const SECTION_TYPE_COLORS: Record<string, string> = {
 export function ConditionsPanel({ section, task }: ConditionsPanelProps) {
   return (
     <div className="border-b border-gray-700 p-4">
+      {section && (
+        <div className="mb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Layers className="w-4 h-4 text-gray-400" />
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wide">
+              Section
+            </h3>
+          </div>
+          <div className="flex items-center gap-2">
+            <div
+              className={`w-2 h-2 rounded-full ${
+                SECTION_TYPE_COLORS[section.type] || 'bg-gray-500'
+              }`}
+            ></div>
+            <span className="text-base font-medium text-white">
+              {section.name}
+            </span>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center gap-2 mb-3">
         <FileText className="w-4 h-4 text-gray-400" />
         <h3 className="text-sm font-semibold text-white uppercase tracking-wide">
@@ -27,7 +48,7 @@ export function ConditionsPanel({ section, task }: ConditionsPanelProps) {
       </div>
 
       <div className="space-y-3">
-        {section && (
+        {section && section.description && (
           <div className="p-3 bg-gray-700/50 rounded-xl border border-gray-600">
             <div className="flex items-center gap-2 mb-2">
               <div
@@ -39,11 +60,9 @@ export function ConditionsPanel({ section, task }: ConditionsPanelProps) {
                 {section.type.replace('_', ' ')}
               </span>
             </div>
-            {section.description && (
-              <p className="text-xs text-gray-400 leading-relaxed">
-                {section.description}
-              </p>
-            )}
+            <p className="text-xs text-gray-400 leading-relaxed">
+              {section.description}
+            </p>
           </div>
         )}
 

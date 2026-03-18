@@ -82,7 +82,7 @@ export function InterviewRoom({ token }: InterviewRoomProps) {
     }
   }, []);
 
-  const wsUrl = session ? `${import.meta.env.VITE_WS_URL || 'ws://localhost:8000'}/ws/${session.room.id}` : null;
+  const wsUrl = session ? `${import.meta.env.VITE_WS_URL || `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}`}/ws/${session.room.id}` : null;
   const { isConnected, sendMessage } = useWebSocket(wsUrl, {
     onMessage: handleWSMessage,
   });
