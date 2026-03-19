@@ -67,15 +67,19 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    env_file: .env
     volumes:
       - frontend_dist:/output
     depends_on:
       - backend
+    networks:
+      - backend
+    restart: "no"
 
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
+      - "81:81"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - frontend_dist:/usr/share/nginx/html:ro

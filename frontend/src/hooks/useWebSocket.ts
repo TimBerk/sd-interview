@@ -17,6 +17,11 @@ export function useWebSocket(url: string | null, options: UseWebSocketOptions = 
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout>();
   const reconnectAttemptsRef = useRef(0);
+  // Стабилизировать options через ref:
+  const optionsRef = useRef(options);
+  useEffect(() => {
+    optionsRef.current = options;
+  });
 
   const connect = useCallback(() => {
     if (!url || wsRef.current?.readyState === WebSocket.OPEN) return;
@@ -28,13 +33,13 @@ export function useWebSocket(url: string | null, options: UseWebSocketOptions = 
         console.log('WebSocket connected');
         setIsConnected(true);
         reconnectAttemptsRef.current = 0;
-        options.onConnect?.();
+        optionsRef.current.onConnect?.();
       };
 
       ws.onmessage = (event) => {
         try {
           const message: WSMessage = JSON.parse(event.data);
-          options.onMessage?.(message);
+          optionsRef.current.onMessage?.(message);
         } catch (error) {
           console.error('Failed to parse WebSocket message:', error);
         }
@@ -42,14 +47,14 @@ export function useWebSocket(url: string | null, options: UseWebSocketOptions = 
 
       ws.onerror = (error) => {
         console.error('WebSocket error:', error);
-        options.onError?.(error);
+        optionsRef.current.onError?.(error);
       };
 
       ws.onclose = () => {
         console.log('WebSocket disconnected');
         setIsConnected(false);
         wsRef.current = null;
-        options.onDisconnect?.();
+        optionsRef.current.onDisconnect?.();
 
         if (reconnectAttemptsRef.current < 5) {
           const delay = Math.min(1000 * Math.pow(2, reconnectAttemptsRef.current), 10000);
@@ -64,7 +69,7 @@ export function useWebSocket(url: string | null, options: UseWebSocketOptions = 
     } catch (error) {
       console.error('Failed to create WebSocket connection:', error);
     }
-  }, [url, options]);
+  }, [url]);
 
   const disconnect = useCallback(() => {
     if (reconnectTimeoutRef.current) {
@@ -90,7 +95,7 @@ export function useWebSocket(url: string | null, options: UseWebSocketOptions = 
     return () => {
       disconnect();
     };
-  }, [connect, disconnect]);
+  }, [connect]);
 
   return {
     isConnected,

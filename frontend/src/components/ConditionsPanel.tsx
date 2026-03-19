@@ -24,18 +24,8 @@ export function ConditionsPanel({ section, task }: ConditionsPanelProps) {
           <div className="flex items-center gap-2 mb-2">
             <Layers className="w-4 h-4 text-gray-400" />
             <h3 className="text-sm font-semibold text-white uppercase tracking-wide">
-              Section
+              Section {section.name}
             </h3>
-          </div>
-          <div className="flex items-center gap-2">
-            <div
-              className={`w-2 h-2 rounded-full ${
-                SECTION_TYPE_COLORS[section.type] || 'bg-gray-500'
-              }`}
-            ></div>
-            <span className="text-base font-medium text-white">
-              {section.name}
-            </span>
           </div>
         </div>
       )}

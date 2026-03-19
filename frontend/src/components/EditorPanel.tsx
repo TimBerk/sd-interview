@@ -33,13 +33,6 @@ export function EditorPanel({ answer, role, onAnswerChange }: EditorPanelProps) 
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-700">
-        <h2 className="text-lg font-semibold text-white">{answer?.section.name}</h2>
-        {answer?.section.description && (
-          <p className="text-sm text-gray-400 mt-1">{answer.section.description}</p>
-        )}
-      </div>
-
       <div className="flex-1 p-6 overflow-auto">
         <textarea
           value={text}

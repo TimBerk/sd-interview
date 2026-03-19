@@ -82,7 +82,8 @@ export function InterviewRoom({ token }: InterviewRoomProps) {
     }
   }, []);
 
-  const wsUrl = session ? `${import.meta.env.VITE_WS_URL || `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}`}/ws/${session.room.id}` : null;
+  const wsUrl = session ? `${import.meta.env.VITE_WS_URL || `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}`}/ws/${session.room.id}/` : null;
+  console.log('Connecting to:', wsUrl);
   const { isConnected, sendMessage } = useWebSocket(wsUrl, {
     onMessage: handleWSMessage,
   });
