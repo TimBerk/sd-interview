@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, memo } from 'react';
 import type { RoomAnswer, Section, UserRole } from '../types';
 import { DrawingCanvas } from './DrawingCanvas';
+import { SqlEditor } from './SqlEditor';
 
 interface EditorPanelProps {
   answer: RoomAnswer & { section: Section };
@@ -30,6 +31,7 @@ export const EditorPanel = memo(function EditorPanel({ answer, role, onAnswerCha
 
   const isReadOnly = role === 'reviewer';
   const isDrawingSection = answer?.section?.type === 'HLD' || answer?.section?.type === 'LLD';
+  const isSqlSection = answer?.section?.type === 'DATA_MODEL';
 
   return (
     <div className="flex-1 flex flex-col p-4 overflow-hidden">
@@ -38,6 +40,13 @@ export const EditorPanel = memo(function EditorPanel({ answer, role, onAnswerCha
           value={text}
           onChange={handleChange}
           disabled={isReadOnly}
+        />
+      ) : isSqlSection ? (
+        <SqlEditor
+          value={text}
+          onChange={handleChange}
+          disabled={isReadOnly}
+          darkTheme={true}
         />
       ) : (
         <textarea
