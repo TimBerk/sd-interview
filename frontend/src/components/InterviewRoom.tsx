@@ -1,14 +1,14 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FileText, MessageSquare, Star, Clock } from 'lucide-react';
 import { api } from '../services/api';
 import { useWebSocket, WSMessage } from '../hooks/useWebSocket';
-import type { RoomSession, RoomAnswer, Section } from '../types';
+import type { RoomSession, RoomAnswer } from '../types';
 import { SectionNavbar } from './SectionNavbar';
 import { EditorPanel } from './EditorPanel';
 import { ConditionsPanel } from './ConditionsPanel';
 import { ScorePanel } from './ScorePanel';
 import { CommentsPanel } from './CommentsPanel';
+import { ThemeToggle } from './ThemeToggle';
 
 interface InterviewRoomProps {
   token: string;
@@ -138,10 +138,10 @@ export function InterviewRoom({ token }: InterviewRoomProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
-          <p className="mt-4 text-gray-400">Loading room...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 dark:border-white mx-auto"></div>
+          <p className="mt-4 text-gray-500 dark:text-gray-400">Loading room...</p>
         </div>
       </div>
     );
@@ -155,7 +155,7 @@ export function InterviewRoom({ token }: InterviewRoomProps) {
   const currentAnswer = answersArray[currentSectionIndex];
 
   return (
-    <div className="h-screen bg-gray-900 flex overflow-hidden">
+    <div className="h-screen bg-gray-50 dark:bg-gray-900 flex overflow-hidden">
       <SectionNavbar
         sections={session.room.answers.map((a) => a.section)}
         currentIndex={currentSectionIndex}
@@ -165,27 +165,28 @@ export function InterviewRoom({ token }: InterviewRoomProps) {
 
       <div className="flex-1 flex overflow-hidden">
         <div className="flex-1 flex flex-col">
-          <div className="bg-gray-800 border-b border-gray-700 px-6 py-4 flex items-center justify-between">
+          <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-semibold text-white">{session.room.name}</h1>
-              <p className="text-sm text-gray-400 mt-1">{session.room.task.name}</p>
+              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">{session.room.name}</h1>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{session.room.task.name}</p>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-700 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 rounded-lg">
                 <div
                   className={`w-2 h-2 rounded-full ${
-                    isConnected ? 'bg-green-400' : 'bg-red-400'
+                    isConnected ? 'bg-green-500' : 'bg-red-500'
                   }`}
                 ></div>
-                <span className="text-xs text-gray-300">
+                <span className="text-xs text-gray-600 dark:text-gray-300">
                   {isConnected ? 'Connected' : 'Disconnected'}
                 </span>
               </div>
-              <div className="px-3 py-1.5 bg-gray-700 rounded-lg">
-                <span className="text-xs font-medium text-white uppercase">
+              <div className="px-3 py-1.5 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                <span className="text-xs font-medium text-gray-900 dark:text-white uppercase">
                   {session.role}
                 </span>
               </div>
+              <ThemeToggle />
             </div>
           </div>
 
@@ -196,7 +197,7 @@ export function InterviewRoom({ token }: InterviewRoomProps) {
           />
         </div>
 
-        <div className="w-80 bg-gray-800 border-l border-gray-700 flex flex-col">
+        <div className="w-80 bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 flex flex-col">
           <ConditionsPanel section={currentAnswer?.section} task={session.room.task} />
 
           {session.role === 'reviewer' && (

@@ -58,7 +58,7 @@ export const EditorPanel = memo(function EditorPanel({ answer, role, onAnswerCha
               ? 'Waiting for candidate response...'
               : 'Type your answer here...'
           }
-          className={`w-full h-full bg-gray-800/50 border border-gray-700 rounded-2xl p-6 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/20 font-mono text-sm resize-none ${
+          className={`w-full h-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-900/20 dark:focus:ring-white/20 font-mono text-sm resize-none ${
             isReadOnly ? 'cursor-default' : ''
           }`}
         />

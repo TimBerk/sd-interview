@@ -32,7 +32,7 @@ export function CommentsPanel({ comment, onCommentChange }: CommentsPanelProps) 
     <div className="flex-1 flex flex-col p-4 overflow-hidden">
       <div className="flex items-center gap-2 mb-3">
         <MessageSquare className="w-4 h-4 text-gray-400" />
-        <h3 className="text-sm font-semibold text-white uppercase tracking-wide">
+        <h3 className="text-sm font-semibold text-gray-800 dark:text-white uppercase tracking-wide">
           Comments
         </h3>
       </div>
@@ -41,7 +41,7 @@ export function CommentsPanel({ comment, onCommentChange }: CommentsPanelProps) 
         value={text}
         onChange={(e) => handleChange(e.target.value)}
         placeholder="Add your feedback here..."
-        className="flex-1 bg-gray-700/50 border border-gray-600 rounded-xl p-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/20 resize-none"
+        className="flex-1 bg-gray-100 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl p-3 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-900/20 dark:focus:ring-white/20 resize-none"
       />
     </div>
   );

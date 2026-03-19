@@ -9,10 +9,10 @@ interface ScorePanelProps {
 
 export function ScorePanel({ currentScore, scoreScale, onScoreChange }: ScorePanelProps) {
   return (
-    <div className="border-b border-gray-700 p-4">
+    <div className="border-b border-gray-200 dark:border-gray-700 p-4">
       <div className="flex items-center gap-2 mb-3">
         <Star className="w-4 h-4 text-gray-400" />
-        <h3 className="text-sm font-semibold text-white uppercase tracking-wide">Score</h3>
+        <h3 className="text-sm font-semibold text-gray-800 dark:text-white uppercase tracking-wide">Score</h3>
       </div>
 
       <div className="space-y-2">
@@ -23,8 +23,8 @@ export function ScorePanel({ currentScore, scoreScale, onScoreChange }: ScorePan
               onClick={() => onScoreChange(scale.score)}
               className={`w-full p-3 rounded-xl border transition-all text-left ${
                 currentScore === scale.score
-                  ? 'bg-white border-white text-gray-900'
-                  : 'bg-gray-700/50 border-gray-600 text-gray-300 hover:bg-gray-700'
+                  ? 'bg-gray-900 dark:bg-white border-gray-900 dark:border-white text-white dark:text-gray-900'
+                  : 'bg-gray-100 dark:bg-gray-700/50 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
               <div className="flex items-center justify-between mb-1">
@@ -34,17 +34,15 @@ export function ScorePanel({ currentScore, scoreScale, onScoreChange }: ScorePan
                       key={i}
                       className={`w-3 h-3 ${
                         i < scale.score
-                          ? currentScore === scale.score
-                            ? 'fill-yellow-500 text-yellow-500'
-                            : 'fill-yellow-400 text-yellow-400'
-                          : 'text-gray-500'
+                          ? 'fill-yellow-400 text-yellow-400'
+                          : currentScore === scale.score ? 'text-gray-400' : 'text-gray-400 dark:text-gray-500'
                       }`}
                     />
                   ))}
                 </div>
                 <span
                   className={`text-xs font-bold ${
-                    currentScore === scale.score ? 'text-gray-900' : 'text-gray-400'
+                    currentScore === scale.score ? 'text-white dark:text-gray-900' : 'text-gray-500 dark:text-gray-400'
                   }`}
                 >
                   {scale.score}/5
@@ -52,7 +50,7 @@ export function ScorePanel({ currentScore, scoreScale, onScoreChange }: ScorePan
               </div>
               <p
                 className={`text-xs ${
-                  currentScore === scale.score ? 'text-gray-700' : 'text-gray-400'
+                  currentScore === scale.score ? 'text-gray-300 dark:text-gray-700' : 'text-gray-500 dark:text-gray-400'
                 }`}
               >
                 {scale.comment}
@@ -67,20 +65,20 @@ export function ScorePanel({ currentScore, scoreScale, onScoreChange }: ScorePan
                 onClick={() => onScoreChange(score)}
                 className={`flex-1 p-3 rounded-xl border transition-all ${
                   currentScore === score
-                    ? 'bg-white border-white'
-                    : 'bg-gray-700/50 border-gray-600 hover:bg-gray-700'
+                    ? 'bg-gray-900 dark:bg-white border-gray-900 dark:border-white'
+                    : 'bg-gray-100 dark:bg-gray-700/50 border-gray-200 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}
               >
                 <Star
                   className={`w-5 h-5 mx-auto ${
                     currentScore === score
-                      ? 'fill-yellow-500 text-yellow-500'
+                      ? 'fill-yellow-400 text-yellow-400'
                       : 'text-gray-400'
                   }`}
                 />
                 <p
                   className={`text-xs font-medium text-center mt-1 ${
-                    currentScore === score ? 'text-gray-900' : 'text-gray-400'
+                    currentScore === score ? 'text-white dark:text-gray-900' : 'text-gray-500 dark:text-gray-400'
                   }`}
                 >
                   {score}
@@ -93,7 +91,7 @@ export function ScorePanel({ currentScore, scoreScale, onScoreChange }: ScorePan
 
       {currentScore && (
         <div className="mt-3 p-2 bg-green-500/10 border border-green-500/20 rounded-lg">
-          <p className="text-xs text-green-400 text-center font-medium">
+          <p className="text-xs text-green-600 dark:text-green-400 text-center font-medium">
             Score: {currentScore}/5
           </p>
         </div>
