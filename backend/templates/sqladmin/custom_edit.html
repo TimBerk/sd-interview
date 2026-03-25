@@ -1,8 +1,20 @@
-{% extends "sqladmin/edit.html" %} {% block tail %}
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+{% extends "sqladmin/edit.html" %} {% block head %}
+<link
+  rel="stylesheet"
+  href="https://cdn.ckeditor.com/ckeditor5/47.6.1/ckeditor5.css"
+/>
+{% endblock %} {% block tail %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/44.3.0/ckeditor.js"></script>
 <script>
-    ClassicEditor.create(document.querySelector("#content")).catch((error) => {
-        console.error(error);
-    });
+  ClassicEditor.create(document.querySelector("#candidate_answer")).catch(
+    (error) => {
+      console.error(error);
+    },
+  );
+  ClassicEditor.create(document.querySelector("#reviewer_comment")).catch(
+    (error) => {
+      console.error(error);
+    },
+  );
 </script>
 {% endblock %}

@@ -4,6 +4,7 @@ from starlette.requests import Request
 from arch.dtos.rooms import RoomCreateDTO
 from arch.models import Rooms
 from arch.use_cases.room_creator import RoomCreatorAsyncUseCase
+from core.fields.ckeditor import CKEditorField
 from settings.db import AsyncSessionLocal
 
 
@@ -11,8 +12,7 @@ class RoomAdmin(ModelView, model=Rooms):
     name = "Комната"
     name_plural = "Комнаты"
     icon = "fa-solid fa-door-open"
-    edit_template = "sqladmin/custom_edit.html"
-    details_template = "arch/rooms/details_template.html"
+    details_template = "arch/rooms/detail.html"
 
     column_list = [
         Rooms.id,
@@ -25,7 +25,9 @@ class RoomAdmin(ModelView, model=Rooms):
     ]
     column_searchable_list = [Rooms.name]
     column_sortable_list = [Rooms.id, Rooms.name, Rooms.status, Rooms.started_at]
-
+    form_overrides = {
+        "description": CKEditorField,
+    }
     form_columns = [
         Rooms.name,
         Rooms.description,

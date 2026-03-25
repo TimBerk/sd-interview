@@ -1,8 +1,8 @@
 from sqladmin import ModelView
-from wtforms import TextAreaField
 
 from arch.enums import TaskStatusEnum
 from arch.models import Tasks
+from core.fields.ckeditor import CKEditorField
 
 
 class TaskAdmin(ModelView, model=Tasks):
@@ -16,7 +16,7 @@ class TaskAdmin(ModelView, model=Tasks):
 
     form_columns = [Tasks.name, Tasks.slug, Tasks.description, Tasks.status]
     form_overrides = {
-        "description": TextAreaField,
+        "description": CKEditorField,
     }
     form_args = {
         "description": {

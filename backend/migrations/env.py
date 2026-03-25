@@ -7,6 +7,8 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from arch.models import Sections, Tasks, Templates  # noqa
+from core.models import Tags  # noqa
+from flow.models import Candidates, CandidateWays, CandidateWaySections  # noqa
 from settings.base import settings
 from settings.db import Base
 

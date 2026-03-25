@@ -1,10 +1,11 @@
 from sqladmin import ModelView
-from sqladmin.fields import JSONField
 from starlette.requests import Request
-from wtforms import TextAreaField, validators
+from wtforms import validators
 
 from arch.enums import SectionTypeEnum
 from arch.models import Sections
+from core.fields.ckeditor import CKEditorField
+from core.fields.json_editor import JSONEditorField
 
 
 class SectionAdmin(ModelView, model=Sections):
@@ -31,8 +32,8 @@ class SectionAdmin(ModelView, model=Sections):
         Sections.score_scale,
     ]
     form_overrides = {
-        "description": TextAreaField,
-        "score_scale": JSONField,  # встроенный JSON редактор sqladmin
+        "description": CKEditorField,
+        "score_scale": JSONEditorField,
     }
     form_args = {
         "description": {

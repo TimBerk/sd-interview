@@ -1,14 +1,14 @@
 from sqladmin import ModelView
-from wtforms import TextAreaField, validators
+from wtforms import validators
 
 from arch.models import RoomAnswers
+from core.fields.ckeditor import CKEditorField
 
 
 class RoomAnswerAdmin(ModelView, model=RoomAnswers):
     name = "Ответ"
     name_plural = "Ответы"
     icon = "fa-solid fa-pen-to-square"
-    edit_template = "custom_edit.html"
 
     column_list = [
         RoomAnswers.id,
@@ -32,8 +32,8 @@ class RoomAnswerAdmin(ModelView, model=RoomAnswers):
         RoomAnswers.mark,
     ]
     form_overrides = {
-        "candidate_answer": TextAreaField,
-        "reviewer_comment": TextAreaField,
+        "candidate_answer": CKEditorField,
+        "reviewer_comment": CKEditorField,
     }
     form_args = {
         "candidate_answer": {"label": "Ответ кандидата", "render_kw": {"rows": 6}},
