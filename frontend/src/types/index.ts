@@ -113,3 +113,77 @@ export interface RoomSession {
   role: UserRole;
   token: string;
 }
+
+// Flow types
+export enum WayDecision {
+  HIRED = 'HIRED',
+  REJECTED = 'REJECTED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  ON_HOLD = 'ON_HOLD',
+}
+
+export enum WayStatus {
+  ACTIVE = 'ACTIVE',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum FlowSectionType {
+  HR = 'HR',
+  TECH = 'TECH',
+  SYSTEM_DESIGN = 'SYSTEM_DESIGN',
+  TEAM = 'TEAM',
+}
+
+export enum SectionDecision {
+  REFUSE = 'REFUSE',
+  RECOMMENDED = 'RECOMMENDED',
+  PENDING = 'PENDING',
+}
+
+export enum SectionStatus {
+  NEW = 'NEW',
+  IN_PROGRESS = 'IN_PROGRESS',
+  END = 'END',
+}
+
+export interface Tag {
+  id: number;
+  name: string;
+  color: string | null;
+}
+
+export interface Candidate {
+  id: number;
+  full_name: string;
+  description: string | null;
+  specialty: string;
+  links: Array<{ label?: string; url: string }>;
+  created_at: string;
+}
+
+export interface WaySection {
+  id: number;
+  way_id: number;
+  name: string;
+  type: FlowSectionType;
+  status: SectionStatus;
+  review: string | null;
+  decision: SectionDecision;
+  sort_order: number;
+  skill_assessments: Array<{ skill: string; score: number; comment?: string }>;
+}
+
+export interface CandidateWay {
+  id: number;
+  candidate_id: number;
+  period_start: string | null;
+  period_end: string | null;
+  specialty: string;
+  decision: WayDecision;
+  status: WayStatus;
+  created_at: string;
+  tags: Tag[];
+  sections: WaySection[];
+  candidate: Candidate | null;
+}
