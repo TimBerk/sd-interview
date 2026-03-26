@@ -148,6 +148,12 @@ export enum SectionStatus {
   ARCHIVED = 'ARCHIVED',
 }
 
+export enum WaySectionStatus {
+  NEW = 'NEW',
+  IN_PROGRESS = 'IN_PROGRESS',
+  END = 'END',
+}
+
 export interface Tag {
   id: number;
   name: string;

@@ -8,8 +8,8 @@ Create Date: 2026-03-13 09:03:07.889122
 
 from typing import Sequence, Union
 
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
@@ -105,4 +105,9 @@ def downgrade() -> None:
     op.drop_table('templates')
     op.drop_index(op.f('ix_tasks_slug'), table_name='tasks')
     op.drop_table('tasks')
+    # Удаляем enum-типы — они не удаляются автоматически
+    op.execute('DROP TYPE IF EXISTS task_status')
+    op.execute('DROP TYPE IF EXISTS specialty')
+    op.execute('DROP TYPE IF EXISTS template_status')
+    op.execute('DROP TYPE IF EXISTS section_type')
     # ### end Alembic commands ###

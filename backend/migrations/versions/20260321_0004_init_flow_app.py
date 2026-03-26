@@ -1,7 +1,7 @@
 """0004_init_flow_app
 
 Revision ID: 0717870cbe0b
-Revises: 6d59e482783e
+Revises: 8d884983367d
 Create Date: 2026-03-21 21:26:06.699763
 
 """
@@ -14,7 +14,7 @@ from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision: str = '0717870cbe0b'
-down_revision: Union[str, Sequence[str], None] = '6d59e482783e'
+down_revision: Union[str, Sequence[str], None] = '8d884983367d'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -90,13 +90,12 @@ def upgrade() -> None:
         sa.Column(
             'status',
             sa.Enum(
-                'DRAFT',
-                'AWAITING_CONFIRMATION',
-                'CONFIRMED',
-                'ARCHIVED',
+                'NEW',
+                'IN_PROGRESS',
+                'END',
                 name='way_section_status',
             ),
-            server_default='DRAFT',
+            server_default='NEW',
             nullable=False,
         ),
         sa.Column('review', sa.Text(), nullable=True),

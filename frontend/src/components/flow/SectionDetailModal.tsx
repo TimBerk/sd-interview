@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { X, Save, CircleCheck as CheckCircle, Clock, CircleAlert as AlertCircle, Archive, ThumbsUp, ThumbsDown, Minus } from 'lucide-react';
+import { X, Save, CheckCircle, Clock, AlertCircle, Archive, ThumbsUp, ThumbsDown, Minus } from 'lucide-react';
 import { api } from '../../services/api';
-import type { WaySection } from '../../types';
-import { SectionDecision, SectionStatus, FlowSectionType } from '../../types';
+import {WaySection, WaySectionStatus} from '../../types';
+import { SectionDecision, FlowSectionType } from '../../types';
 
 interface SectionDetailModalProps {
   section: WaySection;
@@ -18,10 +18,9 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 const STATUS_OPTIONS = [
-  { value: SectionStatus.DRAFT, label: 'Draft', icon: Clock, cls: 'text-gray-500' },
-  { value: SectionStatus.AWAITING_CONFIRMATION, label: 'Awaiting', icon: AlertCircle, cls: 'text-blue-500' },
-  { value: SectionStatus.CONFIRMED, label: 'Confirmed', icon: CheckCircle, cls: 'text-green-500' },
-  { value: SectionStatus.ARCHIVED, label: 'Archived', icon: Archive, cls: 'text-gray-400' },
+  { value: WaySectionStatus.NEW, label: 'New', icon: Clock, cls: 'text-gray-500' },
+  { value: WaySectionStatus.IN_PROGRESS, label: 'In progress', icon: AlertCircle, cls: 'text-blue-500' },
+  { value: WaySectionStatus.END, label: 'End', icon: CheckCircle, cls: 'text-green-500' },
 ];
 
 const DECISION_OPTIONS = [

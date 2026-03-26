@@ -1,8 +1,8 @@
 """0002_data_app_arch
 
 Revision ID: 8d884983367d
-Revises: 1d329a1f11ea
-Create Date: 2026-03-13 17:48:06.531473
+Revises: 6d59e482783e
+Create Date: 2026-03-13 22:41:57.363541
 
 """
 
@@ -14,7 +14,7 @@ from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = '8d884983367d'
-down_revision: Union[str, Sequence[str], None] = '1d329a1f11ea'
+down_revision: Union[str, Sequence[str], None] = '6d59e482783e'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -74,8 +74,34 @@ def upgrade() -> None:
         {'score': score_json},
     )
 
+    # Rooms
+    conn.execute(
+        sa.text("""
+        INSERT INTO public.rooms
+        (id, "name", task_id, template_id, started_at, ended_at, candidate_token, reviewer_token, status)
+        VALUES
+        (1, 'Test', 1, 1, now(), now(), 'candidate_demo_token_12345', 'reviewer_demo_token_67890', 'PENDING'::room_status)
+        ON CONFLICT (id) DO NOTHING
+    """)
+    )
+
+    # Room answers
+    conn.execute(
+        sa.text("""
+        INSERT INTO public.room_answers (id, room_id, section_id, section_order) VALUES
+        (1, 1, 1, 1),
+        (1, 1, 2, 2),
+        (1, 1, 3, 3),
+        (1, 1, 4, 4),
+        (1, 1, 5, 5),
+        (1, 1, 6, 6),
+        (1, 1, 7, 7)
+        ON CONFLICT (id) DO NOTHING
+    """)
+    )
+
 
 def downgrade() -> None:
-    op.execute('TRUNCATE sections CASCADE RESTART IDENTITY')
-    op.execute('TRUNCATE templates CASCADE RESTART IDENTITY')
-    op.execute('TRUNCATE tasks CASCADE RESTART IDENTITY')
+    op.execute('TRUNCATE sections RESTART IDENTITY CASCADE')
+    op.execute('TRUNCATE templates RESTART IDENTITY CASCADE')
+    op.execute('TRUNCATE tasks RESTART IDENTITY CASCADE')

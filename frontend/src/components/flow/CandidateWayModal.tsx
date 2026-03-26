@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { X, User, Calendar, Tag, ChevronRight, CircleCheck as CheckCircle, Clock, CircleAlert as AlertCircle, ThumbsUp, ThumbsDown, Minus, UserCheck, Loader } from 'lucide-react';
+import { X, User, Calendar, Tag, ChevronRight, CheckCircle, Clock, ThumbsUp, ThumbsDown, Minus, UserCheck, Loader } from 'lucide-react';
 import type { CandidateWay, WaySection } from '../../types';
-import { SectionDecision, SectionStatus, FlowSectionType, WayDecision } from '../../types';
+import { SectionDecision, SectionStatus, FlowSectionType, WayDecision, WaySectionStatus } from '../../types';
 import { SectionDetailModal } from './SectionDetailModal';
 import { api } from '../../services/api';
 
@@ -19,17 +19,15 @@ const TYPE_CONFIG: Record<string, { label: string; cls: string }> = {
 };
 
 const STATUS_ICONS: Record<string, React.FC<{ className?: string }>> = {
-  [SectionStatus.DRAFT]: Clock,
-  [SectionStatus.AWAITING_CONFIRMATION]: Loader,
-  [SectionStatus.CONFIRMED]: CheckCircle,
-  [SectionStatus.ARCHIVED]: AlertCircle,
+  [WaySectionStatus.NEW]: Clock,
+  [WaySectionStatus.IN_PROGRESS]: Loader,
+  [WaySectionStatus.END]: CheckCircle,
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  [SectionStatus.DRAFT]: 'text-gray-400',
-  [SectionStatus.AWAITING_CONFIRMATION]: 'text-blue-500',
-  [SectionStatus.CONFIRMED]: 'text-green-500',
-  [SectionStatus.ARCHIVED]: 'text-gray-400',
+  [WaySectionStatus.NEW]: 'text-gray-400',
+  [WaySectionStatus.IN_PROGRESS]: 'text-blue-500',
+  [WaySectionStatus.END]: 'text-green-500',
 };
 
 const DECISION_ICONS: Record<string, React.FC<{ className?: string }>> = {

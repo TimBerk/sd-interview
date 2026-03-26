@@ -1,20 +1,19 @@
 """
 
 Revision ID: 6d59e482783e
-Revises: 8d884983367d
-Create Date: 2026-03-13 22:41:57.363541
+Revises: 1d329a1f11ea
+Create Date: 2026-03-13 17:48:06.531473
 
 """
 
 from typing import Sequence, Union
 
-from alembic import op
 import sqlalchemy as sa
-
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = '6d59e482783e'
-down_revision: Union[str, Sequence[str], None] = '8d884983367d'
+down_revision: Union[str, Sequence[str], None] = '1d329a1f11ea'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -73,4 +72,6 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_rooms_template_id'), table_name='rooms')
     op.drop_index(op.f('ix_rooms_task_id'), table_name='rooms')
     op.drop_table('rooms')
+    # Удаляем enum-типы — они не удаляются автоматически
+    op.execute('DROP TYPE IF EXISTS room_status')
     # ### end Alembic commands ###
